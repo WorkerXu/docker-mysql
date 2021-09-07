@@ -3,16 +3,19 @@ version: "3.0"
 services:
   mysql-server:
     container_name: mysql-server
-    build: 
-      context: ./mysql
-      args: 
-        MYSQL_VERSION: ${MYSQL_VERSION}
+    image: mysql:${MYSQL_VERSION}
     ports:
       - ${MYSQL_PORT}:3306
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - ${MYSQL_DATA_PATH}:/var/lib/mysql
       - ${MYSQL_LOG_PATH}:/var/log/mysql
+      - ${MYSQL_CONFIG_PATH}:/etc/mysql
     restart: always
     environment:
+      TZ: 'Asia/Shanghai'
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     
