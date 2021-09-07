@@ -5,6 +5,8 @@ services:
     container_name: mysql-server
     build: 
       context: ./mysql
+      args: 
+        MYSQL_VERSION: ${MYSQL_VERSION}
     ports:
       - ${MYSQL_PORT}:3306
     volumes:
